@@ -1,0 +1,10 @@
+{
+    "publish_key": "*******************",
+    "service_port": 3000,
+    "target_ip": "10.99.20.44",
+    "target_port": 3000,
+    "white_listed_paths": [
+        "/state",
+        "/action"
+    ]
+}
