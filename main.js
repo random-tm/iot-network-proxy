@@ -15,7 +15,7 @@ app.use(async ctx => {
             const requestParams = parseQueryString(ctx.request);
             console.log(requestParams);
             if(requestParams.publishKey == config.publish_key){
-                const targetUrl = `http://${config.target_ip}:${config.target_port}/${requestPath}`;
+                const targetUrl = `http://${config.target_ip}:${config.target_port}${requestPath}`;
                 axios.post(targetUrl, requestParams).catch(() => {
                     console.log("Failed request");
                     //Dynamic type check fails here so do an explicit conversion
