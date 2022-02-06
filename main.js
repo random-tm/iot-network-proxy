@@ -38,8 +38,8 @@ const retryLoop = (targetUrl, requestParams) => {
         clearTimeout(activeRetires[requestParams.retryState]);
         activeRetires[requestParams.retryState] = undefined;
     }
-    activeRetires[requestParams.retryState] = axios.post(targetUrl, requestParams).catch(() => {
-        setTimeout(() => {
+    axios.post(targetUrl, requestParams).catch(() => {
+        activeRetires[requestParams.retryState] = setTimeout(() => {
             retryLoop(targetUrl, requestParams);
         }, 1000 * 60 * 5)
     })
