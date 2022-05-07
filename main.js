@@ -17,7 +17,7 @@ app.use(async ctx => {
             console.log(requestParams);
             if(requestParams.publishKey == config.publish_key){
                 let targetUrl = undefined;
-                if(config.is_remote){
+                if(new Boolean(config.is_remote) == true){
                     const params = ctx.request.URL.search;
                     targetUrl = `http://${config.target_ip}:${config.target_port}${requestPath}${params}`;
                 } else {
