@@ -9,13 +9,20 @@ app.use(bodyParser());
 const activeRetires = {};
 
 app.use(async ctx => {
+    ctx.body = "OK";
     const requestPath = ctx.request.path;
     if(config.white_listed_paths.includes(requestPath)){
         try {
             const requestParams = parseQueryString(ctx.request);
             console.log(requestParams);
             if(requestParams.publishKey == config.publish_key){
-                const targetUrl = `http://${config.target_ip}:${config.target_port}${requestPath}`;
+                let targetUrl = undefined;
+                if(config.is_remote){
+                    const params = ctx.request.URL.search;
+                    targetUrl = `http://${config.target_ip}:${config.target_port}${requestPath}${params}`;
+                } else {
+                    targetUrl = `http://${config.target_ip}:${config.target_port}${requestPath}`;
+                }
                 axios.post(targetUrl, requestParams).catch(() => {
                     console.log("Failed request");
                     //Dynamic type check fails here so do an explicit conversion
